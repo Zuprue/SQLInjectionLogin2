@@ -1,11 +1,15 @@
 package com.example.sqlinjectionlogin2;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DBHelper extends SQLiteOpenHelper {
 
@@ -31,12 +35,30 @@ public class DBHelper extends SQLiteOpenHelper {
     public void addRecord(String username, String password){
         String dbInsert = "INSERT INTO users (username, password) VALUES ('" + username + "','" + password + "')";
         Log.d(":addRecord()", dbInsert);
-        SQLiteDatabase MyDB = this.getWritableDatabase();
-        MyDB.execSQL(dbInsert);
-        MyDB.close();
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL(dbInsert);
+        db.close();
     }
     /*List all users  */
-    public List<users> getAllUsers() {
+    public List<String> getAllUsers(String username, String password) {
+        ArrayList userList = new ArrayList();
+        List<String> usersList = new ArrayList<String>();
+        // DB connection
+        SQLiteDatabase db = this.getWritableDatabase();
+        //This is the statement we can exploit
+        String columns = "SELECT * FROM users WHERE username = '" + username + "' AND " + "password" + "='" + password + "'";
 
+        Cursor cursor = db.rawQuery(columns, null);
+        String column1 = cursor.getString(1);
+        String column2 = cursor.getString(2);
+
+        userList.add(column1);
+        userList.add(column2);
+        cursor.close();
+        db.close();
+
+        return userList;
     }
+
+
 }
