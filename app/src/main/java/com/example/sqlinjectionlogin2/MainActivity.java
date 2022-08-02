@@ -11,7 +11,7 @@ import android.widget.EditText;
 public class MainActivity extends AppCompatActivity {
 
     EditText username, password;
-    Button loginbtn;
+    Button loginbtn, btnRegister;
     DBHelper db;
 
     @Override
@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
         username = (EditText) findViewById(R.id.username);
         password = (EditText) findViewById(R.id.password);
         loginbtn = (Button) findViewById(R.id.loginbtn);
+        btnRegister = (Button) findViewById(R.id.btnRegister);
         db = new DBHelper(this);
 
         loginbtn.setOnClickListener(new View.OnClickListener(){
