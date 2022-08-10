@@ -77,10 +77,14 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/loginbtn"
         android:layout_marginStart="152dp"
-        android:layout_marginTop="280dp"
+        android:layout_marginTop="276dp"
         android:text="Register"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.326" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
