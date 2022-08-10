@@ -37,14 +37,15 @@ public class LoginActivity extends AppCompatActivity {
                 String user = username.getText().toString();
                 String pass = password.getText().toString();
                 Cursor cursor = db.getUsers();
+                boolean userNameCheck = db.userNameCheck(user);
 
-                if (user.equals("")||pass.equals(""))
+                if (user.equals(""))
                     Toast.makeText(LoginActivity.this, "Please enter a username or password ", Toast.LENGTH_LONG).show();
                   //This is where i'm getting stuck. Need to figure out a way to implement DBHelper to check for login
                     //Cursor cursor = db.rawQuery("SELECT * FROM users WHERE username = ? AND password = ?");
                   else {
-                    boolean usernamecheck = db.usernamecheck(user);
-                    if(usernamecheck == true){
+
+                    if(userNameCheck == true){
                         Toast.makeText(LoginActivity.this, "Signin successful",Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                         startActivity(intent);
@@ -53,13 +54,6 @@ public class LoginActivity extends AppCompatActivity {
                     }
 
                 }
-                    if(cursor.getCount() > 1){
-                        Toast.makeText(LoginActivity.this, "Signin successful",Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-                        startActivity(intent);
-                    }
-
-
             }
         });
     }

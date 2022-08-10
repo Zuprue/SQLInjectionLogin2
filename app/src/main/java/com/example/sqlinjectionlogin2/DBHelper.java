@@ -24,16 +24,16 @@ public class DBHelper extends SQLiteOpenHelper {
     /*Create user table  */
     @Override
     public void onCreate(SQLiteDatabase MyDB) {
-        MyDB.execSQL("CREATE TABLE users(ID INTEGER NOT NULL, username TEXT PRIMARY KEY, password TEXT)");
+        MyDB.execSQL("CREATE TABLE users(username TEXT PRIMARY KEY, password TEXT)");
 
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put("user", "admin");
-        contentValues.put("pass", "admin1");
-        contentValues.put("user", "testInjection");
-        contentValues.put("pass", "admin12");
-
-        db.insert("users",null,contentValues);
+//        SQLiteDatabase db = this.getWritableDatabase();
+//        ContentValues contentValues = new ContentValues();
+//        contentValues.put("user", "admin");
+//        contentValues.put("pass", "admin1");
+//        contentValues.put("user", "testInjection");
+//        contentValues.put("pass", "admin12");
+//
+//        db.insert("users",null,contentValues);
 
 
     }
@@ -46,10 +46,15 @@ public class DBHelper extends SQLiteOpenHelper {
 
     /*Add user record to database*/
     public void addRecord(String username, String password){
-        String dbInsert = "INSERT INTO users (username, password) VALUES ('" + username + "','" + password + "')";
-        Log.d(":addRecord()", dbInsert);
         SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL(dbInsert);
+        ContentValues Values = new ContentValues();
+        Values.put(username, username);
+        Values.put(password, password);
+        db.insert("users",null, Values);
+//        String dbInsert = "INSERT INTO users (username, password) VALUES ('" + username + "','" + password + "')";
+//        Log.d(":addRecord()", dbInsert);
+//
+//        db.execSQL(dbInsert);
         db.close();
     }
     /*List all users  */
@@ -81,7 +86,7 @@ public class DBHelper extends SQLiteOpenHelper {
 //
 //        return userList;
 //    }
-    public boolean usernamecheck(String username){
+    public boolean userNameCheck(String username){
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM users WHERE username = ?",new String[]{username});
         //if cursor. get count > 0 return true else false
