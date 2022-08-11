@@ -60,7 +60,7 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
 
-
+    //Checks to see if the username is valid
     public boolean userNameCheck(String username){
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM users WHERE username = ?",new String[]{username});
@@ -77,7 +77,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return c;
     }
 
-    //    
+    //Checks username and password to verify user exists when logging in
     public boolean isValidLogin(String username, String password){
 
         SQLiteDatabase db = this.getWritableDatabase();
