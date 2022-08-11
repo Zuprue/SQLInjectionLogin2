@@ -5,7 +5,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.preference.EditTextPreference;
 import android.util.Log;
+import android.widget.EditText;
 
 import androidx.annotation.Nullable;
 
@@ -26,14 +28,14 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase MyDB) {
         MyDB.execSQL("CREATE TABLE users(username TEXT PRIMARY KEY, password TEXT)");
 
-//        SQLiteDatabase db = this.getWritableDatabase();
-//        ContentValues contentValues = new ContentValues();
-//        contentValues.put("user", "admin");
-//        contentValues.put("pass", "admin1");
-//        contentValues.put("user", "testInjection");
-//        contentValues.put("pass", "admin12");
-//
-//        db.insert("users",null,contentValues);
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("user", "admin");
+        contentValues.put("pass", "admin");
+        contentValues.put("user", "testInjection");
+        contentValues.put("pass", "admin12");
+
+        db.insert("users",null,contentValues);
 
 
     }
@@ -45,47 +47,20 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     /*Add user record to database*/
-    public void addRecord(String username, String password){
+    public boolean addRecord(String username, String password){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues Values = new ContentValues();
-        Values.put(username, username);
-        Values.put(password, password);
-        db.insert("users",null, Values);
-//        String dbInsert = "INSERT INTO users (username, password) VALUES ('" + username + "','" + password + "')";
-//        Log.d(":addRecord()", dbInsert);
-//
-//        db.execSQL(dbInsert);
-        db.close();
+        Values.put("username", username);
+        Values.put("password", password);
+        long result = db.insert("users",null, Values);
+
+        if(result==-1) return false;
+        else
+            return true;
     }
-    /*List all users  */
-//    public List<String> getAllUsers(String username, String password) {
-//        List<String> userList = new ArrayList<String>();
-//        Cursor c =  db.rawQuery("SELECT username, password FROM users WHERE username = '" + username + "' AND " + "password" + "='" + password + "'", new String[]{username,password});
-//        while (c.moveToNext()){
-//            userList.add(
-//                    new String(
-//                            c.getString(c.getColumnIndex("username")),
-//                            c.getString(c.getColumnIndex("password"))
-//                    )
-//            );
-//        }
-//        //        List<String> usersList = new ArrayList<String>();
-//        // DB connection
-////        SQLiteDatabase db = this.getWritableDatabase();
-////        //This is the statement we can exploit
-////        String columns = "SELECT * FROM users WHERE username = '" + username + "' AND " + "password" + "='" + password + "'";
-////
-////        Cursor cursor = db.rawQuery(columns, null);
-////        String column1 = cursor.getString(1);
-////        String column2 = cursor.getString(2);
-////
-////        userList.add(column1);
-////        userList.add(column2);
-//        cursor.close();
-//        db.close();
-//
-//        return userList;
-//    }
+
+
+
     public boolean userNameCheck(String username){
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM users WHERE username = ?",new String[]{username});
@@ -102,6 +77,16 @@ public class DBHelper extends SQLiteOpenHelper {
         return c;
     }
 
+    //    
+    public boolean isValidLogin(String username, String password){
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "select * from users where username = '" + username + "' and password = '" + password + "'";
+        Cursor c = db.rawQuery(query, null);
+        return c.getCount() != 0;
+
+
+    }
 
 
 }
