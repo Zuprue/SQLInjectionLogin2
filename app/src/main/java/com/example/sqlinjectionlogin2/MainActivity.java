@@ -37,12 +37,13 @@ public class MainActivity extends AppCompatActivity {
                 String user = username.getText().toString();
                 String pass = password.getText().toString();
 
-
+                //
                 //if the username and password are blank than throw error
                 if (user.equals("") || pass.equals(""))
                     Toast.makeText(MainActivity.this, "Please enter a username and or password ", Toast.LENGTH_LONG).show();
                 else {
                     boolean userNameCheck = db.userNameCheck(user);
+                //If username does not exist then insert new login into SQLite DB
                     if (userNameCheck == false) {
                         db.addRecord(user,pass);
                         Toast.makeText(MainActivity.this, "Signin successful", Toast.LENGTH_LONG).show();

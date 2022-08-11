@@ -36,6 +36,7 @@ public class LoginActivity extends AppCompatActivity {
                 String user = username.getText().toString();
                 String pass = password.getText().toString();
 
+
                 if (user.equals("") || pass.equals(""))
                     Toast.makeText(LoginActivity.this, "Please enter a username or password ", Toast.LENGTH_LONG).show();
 
@@ -47,7 +48,7 @@ public class LoginActivity extends AppCompatActivity {
                         startActivity(intent);
                     }else{
                         Toast.makeText(LoginActivity.this,
-                                db.getUsers().toString(),Toast.LENGTH_LONG).show();
+                                "invalid",Toast.LENGTH_LONG).show();
                     }
 
                 }

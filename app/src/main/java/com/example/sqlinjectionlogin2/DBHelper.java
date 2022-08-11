@@ -28,16 +28,6 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase MyDB) {
         MyDB.execSQL("CREATE TABLE users(username TEXT PRIMARY KEY, password TEXT)");
 
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put("user", "admin");
-        contentValues.put("pass", "admin");
-        contentValues.put("user", "testInjection");
-        contentValues.put("pass", "admin12");
-
-        db.insert("users",null,contentValues);
-
-
     }
 
     /* */
@@ -46,7 +36,7 @@ public class DBHelper extends SQLiteOpenHelper {
         MyDB.execSQL("DROP TABLE IF EXISTS users");
     }
 
-    /*Add user record to database*/
+    /*Add user record to database when creating login */
     public boolean addRecord(String username, String password){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues Values = new ContentValues();
