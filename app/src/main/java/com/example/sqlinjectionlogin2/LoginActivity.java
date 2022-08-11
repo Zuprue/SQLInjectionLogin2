@@ -11,7 +11,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.util.List;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -36,21 +35,23 @@ public class LoginActivity extends AppCompatActivity {
 
                 String user = username.getText().toString();
                 String pass = password.getText().toString();
-                Cursor cursor = db.getUsers();
-                boolean userNameCheck = db.userNameCheck(user);
+                //Curso
+//                StringBuilder newString = new StringBuilder("");
+//                if ((newString != null) && (newString.getCount() > 0))
 
-                if (user.equals(""))
+
+
+                if (user.equals("") || pass.equals(""))
                     Toast.makeText(LoginActivity.this, "Please enter a username or password ", Toast.LENGTH_LONG).show();
-                  //This is where i'm getting stuck. Need to figure out a way to implement DBHelper to check for login
-                    //Cursor cursor = db.rawQuery("SELECT * FROM users WHERE username = ? AND password = ?");
-                  else {
-
-                    if(userNameCheck == true){
+                    //This is where i'm getting stuck. Need to figure out a way to implement DBHelper to check for login
+                else {
+                    boolean isValidLogin = db.isValidLogin(user,pass);
+                    if(isValidLogin == true){
                         Toast.makeText(LoginActivity.this, "Signin successful",Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                         startActivity(intent);
                     }else{
-                        Toast.makeText(LoginActivity.this, "Invalid sign creds",Toast.LENGTH_LONG).show();
+                        Toast.makeText(LoginActivity.this, db.getUsers().toString(),Toast.LENGTH_LONG).show();
                     }
 
                 }
