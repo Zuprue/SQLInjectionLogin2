@@ -35,15 +35,10 @@ public class LoginActivity extends AppCompatActivity {
 
                 String user = username.getText().toString();
                 String pass = password.getText().toString();
-                //Curso
-//                StringBuilder newString = new StringBuilder("");
-//                if ((newString != null) && (newString.getCount() > 0))
-
-
 
                 if (user.equals("") || pass.equals(""))
                     Toast.makeText(LoginActivity.this, "Please enter a username or password ", Toast.LENGTH_LONG).show();
-                    //This is where i'm getting stuck. Need to figure out a way to implement DBHelper to check for login
+
                 else {
                     boolean isValidLogin = db.isValidLogin(user,pass);
                     if(isValidLogin == true){
@@ -51,7 +46,8 @@ public class LoginActivity extends AppCompatActivity {
                         Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                         startActivity(intent);
                     }else{
-                        Toast.makeText(LoginActivity.this, db.getUsers().toString(),Toast.LENGTH_LONG).show();
+                        Toast.makeText(LoginActivity.this,
+                                db.getUsers().toString(),Toast.LENGTH_LONG).show();
                     }
 
                 }
